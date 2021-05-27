@@ -96,7 +96,7 @@ LOCAL_CFLAGS += -DNO_GBM
 LOCAL_CFLAGS += -DDEFAULT_ES=2
 
 LOCAL_LDLIBS := -llog
-#building as a static lib
 
-LOCAL_CFLAGS += -DSTATICLIB
-include $(BUILD_STATIC_LIBRARY)
+
+
+include $(BUILD_SHARED_LIBRARY)
