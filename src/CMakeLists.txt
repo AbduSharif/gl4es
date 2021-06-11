@@ -187,7 +187,16 @@ endif()
 
 set_source_files_properties(${CMAKE_CURRENT_SOURCE_DIR}/gl/build_info.c PROPERTIES OBJECT_DEPENDS "${GL_SRC};${GL_H}")
 
-if(STATICLIB)
+if(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
+    if(STATICLIB)
+        add_library(OPENGL32 STATIC ${GL_SRC})
+    else()
+        add_library(OPENGL32 SHARED ${GL_SRC})
+        # some ES simulators used opengl32.dll :(
+        set_target_properties(OPENGL32 PROPERTIES OUTPUT_NAME "GL32")
+        set_target_properties(OPENGL32 PROPERTIES IMPORT_PREFIX "OPEN")
+    endif()
+elseif(STATICLIB)
     add_library(GL STATIC ${GL_SRC})
 else()
     add_library(GL SHARED ${GL_SRC})

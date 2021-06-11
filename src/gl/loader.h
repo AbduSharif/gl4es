@@ -78,6 +78,12 @@ typedef EGLSurface (*eglCreateStreamProducerSurfaceKHR_PTR)(EGLDisplay dpy, EGLC
 #elif !defined(_WIN32)
 #include <dlfcn.h>
 #else
+#ifndef _WINBASE_
+typedef struct HISTANCE__* HISTANCE;
+typedef intptr_t (__stdcall* FPROC)();
+__declspec(dllimport)
+FPROC __stdcall GetProcAddress(HISTANCE, const char*);
+#endif
 #ifdef _MSC_VER
 __forceinline
 #elif defined(__GNUC__)
@@ -91,9 +97,9 @@ static void* dlsym(void* __restrict handle, const char* __restrict symbol)
 #include <string.h>
 
 #include "../glx/hardext.h"
-extern void *(*gles_getProcAddress)(const char *name);
-extern void (*gl4es_getMainFBSize)(GLint* width, GLint* height);
-EXPORT void *proc_address(void *lib, const char *name);
+extern void* (APIENTRY_GL4ES *gles_getProcAddress)(const char *name);
+extern void (APIENTRY_GL4ES *gl4es_getMainFBSize)(GLint* width, GLint* height);
+NonAliasExportDecl(void*,proc_address,(void *lib, const char *name));
 // will become references to dlopen'd gles and egl
 extern void *gles, *bcm_host, *vcos, *gbm, *drm;
 EXPORT extern void *egl;
