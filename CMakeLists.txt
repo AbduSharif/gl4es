@@ -92,6 +92,7 @@ endif()
 if(ANDROID)
     add_definitions(-DANDROID)
     add_definitions(-DNOX11 -DNO_GBM -DDEFAULT_ES=2)
+    add_definitions(-DNOEGL -DNO_LOADER -DNO_INIT_CONSTRUCTOR)
 endif()
 
 if(USE_ANDROID_LOG)
