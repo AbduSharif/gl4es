@@ -11,6 +11,12 @@ void pandora_set_gamma();
 #endif
 
 void APIENTRY_GL4ES gl4es_glHint(GLenum pname, GLenum mode) {
+
+//save precomipled shader archive
+if(pname == 41231){
+    fpe_writePSA();
+    return;
+}
     
     FLUSH_BEGINEND;
 
